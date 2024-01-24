@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>IMDB MOVIE API</title>
+  <title>Star Wars Character Guide</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,29 +10,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
   <link href="css/grid.css" rel="stylesheet">
   <link href="css/main.css" rel="stylesheet">
-  <script defer src="js/main.js"></script>
 </head>
 
 <body>
   <div class="grid-con">
-
-    <section class="col-span-full m-col-span-6" id="movie-box">
-      <h2>Movie List:</h2>
+    <section class="col-span-full m-col-span-6" id="character-list">
+      <h2>Star Wars Characters:</h2>
     </section>
-
-    <section class="col-span-full m-col-span-6" id="review-box">
-      <h2>Review</h2>
+    <section class="col-span-full m-col-span-6" id="character-details">
+      <h2>Character Details</h2>
     </section>
-
-    <section id="review-con">
-      <template id="review-template">
+    <section id="character-info">
+      <template id="character-template">
         <div>
-          <h3 class="review-heading"></h3>
-          <p class="review_author"></p>
-          <p class="review-description"></p>
+          <h3 class="character-heading"></h3>
+          <p class="character-info">Hair Color: <span class="hair-color"></span></p>
+          <p class="character-info">Eye Color: <span class="eye-color"></span></p>
+          <p class="character-info">Height: <span class="height"></span> cm</p>
+          <p class="character-info">Birth Year: <span class="birth-year"></span></p>
+          <p class="character-info">Gender: <span class="gender"></span></p>
+          <p class="character-info">Species: <span class="species"></span></p>
+          <h4>Movies:</h4>
+          <ul class="movie-list"></ul>
         </div>
       </template>
     </section>
+
+    <script defer src="js/main.js"></script>
   </div>
 </body>
 
