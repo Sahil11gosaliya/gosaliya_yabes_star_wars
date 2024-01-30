@@ -2,11 +2,11 @@
 
 
 # gosaliya_yabes_star_wars
-this is a star wars characters guide book
+This is a star wars characters guide book
 
 
 # description
-This is a simple one page web application to explore and manipulate the tunes with basic html, css and js functionality by implementing API and JSON with Star Wars Franchise.(Star Wars Character Guide)
+This is a simple one page web application to explore and manipulate the tunes with basic html, css and js functionality by implementing API and JSON with Star Wars Franchise.
 
 # version / history
 1.0 - Setting up files
