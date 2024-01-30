@@ -1,3 +1,130 @@
 a {
     cursor: pointer;
 }
+
+body {
+    background-image: url('../images/bg.png');
+    background-size: cover; /* Scale the background image to fit the entire area without clipping */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-attachment: fixed; /* Keep the background fixed during scroll */
+    height: 100vh; /* Minimum height of body is 100% of the viewport height */
+ 
+
+}
+
+
+.titles {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items horizontally */
+    padding-top: 320px; /* Set a height to center vertically within the viewport */
+}
+
+
+
+#character-list {
+    font-size:  30px;
+}
+
+.data{
+    font-size:  30px;
+
+}
+
+#character-details {
+    font-size:  30px;
+    display: flex;
+    
+}
+
+
+.clist {
+    display: flex;
+    flex-wrap: wrap; /* Allow elements to wrap to the next line */
+    justify-content: space-between; /* Distribute elements evenly between lines */
+    font-size: 20px;
+}
+
+/* Add a glass effect to the container of each character's name */
+/* Add a glass effect to the container of each character's name */
+.clist li {
+    border: solid 1px white;
+    width: calc(20% - 10px); /* Set the width to 20% (1/5) minus 10px for spacing */
+    margin-bottom: 10px; /* Add some vertical spacing between elements */
+    list-style-type: none;
+    display: flex; /* Enable Flexbox for list items */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    backdrop-filter: blur(7px); /* Apply a blur effect to create the glass effect */
+    background-color: rgba(255, 255, 255, 0.2); /* Add a semi-transparent background color */
+    padding: 10px; /* Add padding for spacing inside the container */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for depth */
+    border-radius: 0 0 20px 0; /* Apply border radius to the right bottom corner */
+    transition: filter 0.3s ease; /* Add a transition for the filter property */
+}
+
+.clist li a {
+    text-decoration: none; /* Remove underlines from links */
+    color: white; /* Set the text color to white */
+}
+
+/* Add hover effect to invert colors */
+.clist li:hover {
+    transform: translateY(-5px); /* Move the list item 5 pixels up on hover */
+    transition: transform 0.2s ease; /* Add a smooth transition effect */
+    box-shadow: 0 0 10px rgba(173, 216, 230, 0.8), 0 0 20px rgba(173, 216, 230, 0.6), 0 0 30px rgba(173, 216, 230, 0.4);
+}
+
+
+
+/* Add a glass container effect */
+.cbiodata {
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    border: 1px solid white;
+    padding: 10px;
+    backdrop-filter: blur(5px); /* Apply a blur effect to create the glass effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for depth */
+    border-radius: 20px; /* Rounded corners */
+    margin: 30px;
+    
+    &:nth-child(1){
+        width: 60%;
+        height: fit-content;
+    }
+
+  }
+  
+  .spinner {
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #ffffff; /* Change color as needed */
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // z-index: 1000; /* Make sure it's on top of other elements */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  #loading-spinner {
+    display: none;
+  }
+  
+
+
+  /* Style for movie posters */
+img{
+    max-width: 200px; /* Adjust as needed */
+    height: auto; /* This ensures the aspect ratio is maintained */
+}
+
+
+

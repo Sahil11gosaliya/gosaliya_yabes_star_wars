@@ -7,37 +7,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&family=Share+Tech&display=swap"
+    rel="stylesheet">
   <link href="css/grid.css" rel="stylesheet">
   <link href="css/main.css" rel="stylesheet">
+
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+  <script defer src="js/main.js"></script>
 </head>
 
 <body>
-  <div class="grid-con">
-    <section class="col-span-full m-col-span-6" id="character-list">
-      <h2>Star Wars Characters:</h2>
-    </section>
-    <section class="col-span-full m-col-span-6" id="character-details">
-      <h2>Character Details</h2>
-    </section>
-    <section id="character-info">
-      <template id="character-template">
-        <div>
-          <h3 class="character-heading"></h3>
-          <p class="character-info">Hair Color: <span class="hair-color"></span></p>
-          <p class="character-info">Eye Color: <span class="eye-color"></span></p>
-          <p class="character-info">Height: <span class="height"></span> cm</p>
-          <p class="character-info">Birth Year: <span class="birth-year"></span></p>
-          <p class="character-info">Gender: <span class="gender"></span></p>
-          <p class="character-info">Species: <span class="species"></span></p>
-          <h4>Movies:</h4>
-          <ul class="movie-list"></ul>
-        </div>
-      </template>
-    </section>
+  <div class="full-width-grid-con">
+    <section class="col-span-4 m-col-span-6 l-col-span-12 xl-col-span-12 titles">
+      <div id="character-list">
+        <h2>CHOOSE CHARACTER</h2>
+        <div class="clist"></div>
+      </div>
 
-    <script defer src="js/main.js"></script>
+      <div class="data">
+        <h2>CHARACTER DATA</h2>
+      </div>
+
+      <div id="character-details">
+
+      </div>
+
+    </section>
   </div>
+
+  <section id="character-info">
+    <template id="character-template">
+      <div class="cbiodata">
+        <h3 class="character-heading"></h3>
+        <p class="character-info">Hair Color: <span class="hair-color"></span></p>
+        <p class="character-info">Eye Color: <span class="eye-color"></span></p>
+        <p class="character-info">Height: <span class="height"></span> cm</p>
+        <p class="character-info">Birth Year: <span class="birth-year"></span></p>
+        <p class="character-info">Gender: <span class="gender"></span></p>
+        <p class="character-info">Species: <span class="species"></span></p>
+        <h4>Movies:</h4>
+        <ul class="movie-list"></ul>
+      </div>
+    </template>
+  </section>
+
+  <div class="spinner" id="loading-spinner"></div>
+
+  <audio id="background-audio" autoplay loop>
+    <source src="audio/star_wars.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+
+
 </body>
 
 </html>
