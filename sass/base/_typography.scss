@@ -1,24 +1,23 @@
-p, h1, h2, h3 {
-    font-family: 'Open Sans', Arial, sans-serif;
+body {
+    font-family: 'Exo', sans-serif;
+    color: white;
 }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Share Tech', sans-serif;
+    color: white;
+}
+
+.character-info {
+    font-family: 'Share Tech', sans-serif;
+    color: white;
+}
+
+
 
 p {
-    margin-bottom: 20px;
-}
-
-h2 {
-    margin-top: 20px;
-    font-weight: 600;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-h3 {
-    font-weight: 600;
-    font-size: 18px;
-}
-
-p {
+    font-family: 'Share Tech', sans-serif;
     font-weight: 300;
     font-size: 16px;
+    margin-bottom: 20px;
 }
