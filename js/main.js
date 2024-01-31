@@ -2,7 +2,9 @@
     const baseUrl = 'https://swapi.dev/api/';
     const characterList = document.querySelector('.clist');
     const characterDetails = document.querySelector('#character-details');
-    const charactersData = {}; // Store character details to prevent redundant requests
+    const characterAudio = document.querySelector('audio'); // Reference to the audio element
+
+
 
     // Create and setup the loading spinner element for character list
     const spinner = document.createElement('div');
@@ -24,22 +26,18 @@
     // Shuffle the animations randomly
     const shuffleAnimations = () => {
         const characterItems = [...characterList.querySelectorAll('li')];
-        const shuffledCharacterItems = characterItems.sort(() => Math.random() - 0.5);
-
-        shuffledCharacterItems.forEach((characterItem, index) => {
+        characterItems.sort(() => Math.random() - 0.5).forEach((characterItem, index) => {
             TweenMax.to(characterItem, 0.5, {
-                opacity: 1, // Animate opacity to 1 (fully visible)
-                ease: Power2.easeInOut, // Easing function for smooth animation
-                delay: 0.3 * index, // Apply delay to create staggered animation
+                opacity: 1,
+                ease: Power2.easeInOut,
+                delay: 0.3 * index,
             });
         });
     };
 
-    const getCharacterDetails = (character, characterItem) => {
-        if (!charactersData[character.url] || !character.detailsFetched) {
-            charactersData[character.url] = true; // Mark character as fetched to prevent redundant requests
-            character.detailsFetched = true; // Mark character as details fetched
-            spinner2.style.display = 'block'; // Show the loading spinner
+    const getCharacterDetails = (character) => {
+        if (!character.detailsFetched) {
+            spinner2.style.display = 'block';
             characterDetails.innerHTML = '';
 
             Promise.all(character.films.map(url => fetch(url).then(response => response.json())))
@@ -58,20 +56,17 @@
                     `;
 
                     const characterImage = document.createElement('img');
-                    characterImage.src = `images/${character.url.match(/\d+/)}.png`; // Link to character image
-
-                    // Append the image element to the character info div
-                    characterInfoDiv.prepend(characterImage); // Place the character image at the top
+                    characterImage.src = `images/${character.url.match(/\d+/)}.png`;
+                    characterInfoDiv.prepend(characterImage);
                     characterDetails.appendChild(characterInfoDiv);
 
                     // Movie Containers
-                    movies.forEach((movie, index) => {
+                    movies.slice(0, 4).forEach((movie, index) => {
                         const movieContainer = document.createElement('div');
                         movieContainer.classList.add('cbiodata', 'glass-container', 'movie-container');
-                        movieContainer.style.opacity = '0'; // Initially set the opacity to 0
-
-                        const posterURL = `images/${index + 1}.jpeg`; // Modify as per your image naming convention
-
+                        movieContainer.style.opacity = '0';
+                        movieContainer.style.transform = 'scale(0)'; // Start with a scale of 0 for the zoom effect
+                        const posterURL = `images/${index + 1}.jpeg`;
                         movieContainer.innerHTML = `
                             <img src="${posterURL}" alt="Poster for ${movie.title}">
                             <h4>${movie.title}</h4>
@@ -79,25 +74,46 @@
                         `;
                         characterDetails.appendChild(movieContainer);
 
-                        // Animate the movie container to fade in
+                        // Apply zoom-in animation to the glass-container
                         TweenMax.to(movieContainer, 0.5, {
-                            opacity: 1, // Animate opacity to 1 (fully visible)
-                            ease: Power2.easeInOut, // Easing function for smooth animation
+                            opacity: 1,
+                            scale: 1, // Scale back to normal size for zoom-in effect
+                            ease: Power2.easeInOut,
                         });
                     });
 
-                    spinner2.style.display = 'none'; // Hide the loading spinner
-
-                    // Scroll to the character details section with smooth scrolling
+                    spinner2.style.display = 'none';
                     characterDetails.scrollIntoView({ behavior: 'smooth' });
+                    character.detailsFetched = true;
                 })
                 .catch(error => {
                     console.error("Error fetching character details:", error);
                     characterDetails.innerHTML = "<p>Error fetching character details. Please try again.</p>";
-                    spinner2.style.display = 'none'; // Hide the loading spinner on error
+                    spinner2.style.display = 'none';
                 });
+        } else {
+            characterDetails.innerHTML = '';
+            character.detailsFetched = false;
         }
     };
+
+
+
+    gsap.from("#character-list", {
+        duration: 1.5,
+        opacity: 0,
+        x: -50,
+        ease: "power2.out"
+    });
+
+    // Animation for "CHARACTER DATA AND FEATURED MOVIES" text
+    gsap.from("#data", {
+        duration: 1.5,
+        opacity: 0,
+        x: 50,
+        ease: "power2.out",
+        delay: 0.5 // Delay the animation for a smoother effect
+    });
 
     fetch(`${baseUrl}people/`)
         .then(response => {
@@ -107,42 +123,48 @@
             return response.json();
         })
         .then(data => {
-            const characters = data.results.slice(0, 10); // Limit to 10 characters for simplicity
+            const characters = data.results.slice(0, 10);
 
-            characters.forEach((character, index) => {
+            characters.forEach(character => {
                 const characterItem = document.createElement('li');
                 const characterLink = document.createElement('a');
                 characterLink.textContent = character.name;
                 characterLink.href = '#';
                 characterItem.appendChild(characterLink);
                 characterList.appendChild(characterItem);
-
-                // Initially set the opacity to 0 for character links
                 characterItem.style.opacity = '0';
 
                 characterLink.addEventListener('click', (event) => {
                     event.preventDefault();
-                    if (!characterLink.classList.contains('clicked')) {
-                        characterLink.classList.add('clicked');
-                        getCharacterDetails(character, characterItem);
-                    } else {
-                        // Reset the detailsFetched flag for this character
-                        character.detailsFetched = false;
+                    // Remove 'active-link' class from all links
+                    document.querySelectorAll('.clist a').forEach(link => link.classList.remove('active-link'));
+
+                    // Add 'active-link' class to the clicked link
+                    characterLink.classList.add('active-link');
+
+                    if (characterAudio) {
+                        characterAudio.play();
                     }
+
+                    getCharacterDetails(character);
                 });
             });
 
-            // Hide the loading spinner for character list once characters are loaded
             spinner.style.display = 'none';
-
-            // Shuffle the animations of character list items
             shuffleAnimations();
         })
         .catch(error => {
             console.error("Error fetching character list:", error);
             characterDetails.innerHTML = "<p>Error fetching character list. Please try again.</p>";
-            spinner.style.display = 'none'; // Hide the loading spinner on error
+            spinner.style.display = 'none';
         });
 })();
 
 
+
+// (() => {
+//     const bgmusic = document.querySelector('.bgm');
+//     bgmusic.play().catch(() => {
+//         console.error('Autoplay was prevented.');
+//     });
+// })();
