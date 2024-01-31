@@ -2,30 +2,26 @@
     const baseUrl = 'https://swapi.dev/api/';
     const characterList = document.querySelector('.clist');
     const characterDetails = document.querySelector('#character-details');
-    const characterAudio = document.querySelector('audio'); // Reference to the audio element
+    const characterAudio = document.querySelector('audio');
 
-
-
-    // Create and setup the loading spinner element for character list
     const spinner = document.createElement('div');
     spinner.classList.add('spinner', 'glass-container');
     spinner.id = 'spinner';
     document.body.appendChild(spinner);
-    spinner.style.display = 'block'; // Initially set to visible
+    spinner.style.display = 'block';
 
-    // Create and setup the loading spinner element for character details
     const spinner2 = document.createElement('div');
     spinner2.classList.add('spinner', 'glass-container');
     spinner2.id = 'spinner2';
     document.body.appendChild(spinner2);
-    spinner2.style.display = 'none'; // Initially set to hidden
+    spinner2.style.display = 'none';
 
-    // Add GSAP TweenMax for animation (Make sure to include the GSAP library in your HTML)
     const { TweenMax, Power2 } = window;
 
-    // Shuffle the animations randomly
     const shuffleAnimations = () => {
-        const characterItems = [...characterList.querySelectorAll('li')];
+        // const characterItems = [...characterList.querySelectorAll('li')];
+        const characterItems = Array.from(characterList.querySelectorAll('li'));
+
         characterItems.sort(() => Math.random() - 0.5).forEach((characterItem, index) => {
             TweenMax.to(characterItem, 0.5, {
                 opacity: 1,
@@ -40,9 +36,9 @@
             spinner2.style.display = 'block';
             characterDetails.innerHTML = '';
 
+
             Promise.all(character.films.map(url => fetch(url).then(response => response.json())))
                 .then(movies => {
-                    // Character Information
                     const characterInfoDiv = document.createElement('div');
                     characterInfoDiv.classList.add('cbiodata', 'glass-container');
                     characterInfoDiv.innerHTML = `
@@ -60,12 +56,11 @@
                     characterInfoDiv.prepend(characterImage);
                     characterDetails.appendChild(characterInfoDiv);
 
-                    // Movie Containers
                     movies.slice(0, 4).forEach((movie, index) => {
                         const movieContainer = document.createElement('div');
                         movieContainer.classList.add('cbiodata', 'glass-container', 'movie-container');
                         movieContainer.style.opacity = '0';
-                        movieContainer.style.transform = 'scale(0)'; // Start with a scale of 0 for the zoom effect
+                        movieContainer.style.transform = 'scale(0)';
                         const posterURL = `images/${index + 1}.jpeg`;
                         movieContainer.innerHTML = `
                             <img src="${posterURL}" alt="Poster for ${movie.title}">
@@ -74,10 +69,9 @@
                         `;
                         characterDetails.appendChild(movieContainer);
 
-                        // Apply zoom-in animation to the glass-container
                         TweenMax.to(movieContainer, 0.5, {
                             opacity: 1,
-                            scale: 1, // Scale back to normal size for zoom-in effect
+                            scale: 1,
                             ease: Power2.easeInOut,
                         });
                     });
@@ -97,8 +91,6 @@
         }
     };
 
-
-
     gsap.from("#character-list", {
         duration: 1.5,
         opacity: 0,
@@ -106,13 +98,12 @@
         ease: "power2.out"
     });
 
-    // Animation for "CHARACTER DATA AND FEATURED MOVIES" text
     gsap.from("#data", {
         duration: 1.5,
         opacity: 0,
         x: 50,
         ease: "power2.out",
-        delay: 0.5 // Delay the animation for a smoother effect
+        delay: 0.5
     });
 
     fetch(`${baseUrl}people/`)
@@ -136,16 +127,11 @@
 
                 characterLink.addEventListener('click', (event) => {
                     event.preventDefault();
-                    // Remove 'active-link' class from all links
                     document.querySelectorAll('.clist a').forEach(link => link.classList.remove('active-link'));
-
-                    // Add 'active-link' class to the clicked link
                     characterLink.classList.add('active-link');
-
                     if (characterAudio) {
                         characterAudio.play();
                     }
-
                     getCharacterDetails(character);
                 });
             });
@@ -168,3 +154,8 @@
 //         console.error('Autoplay was prevented.');
 //     });
 // })();
+
+
+
+
+// Promise.all is used to concurrently fetch and process movie data for a character after their details are displayed, optimizing performance instead of if...then...else
