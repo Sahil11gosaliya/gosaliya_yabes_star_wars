@@ -29,9 +29,9 @@ This is a one-page collaborative web application that allows you to explore the 
 2. Load it in your local system. 
 3. Run the application and start exploring the Star Wars characters.
 
-To create your feature branch, use the following commands:
-git checkout -b my-new-feature
-git commit -am 'Add some feature'
+To create your feature branch, use the following commands:<br>
+git checkout -b my-new-feature <br>
+git commit -am 'Add some feature'<br>
 git push origin my-new-feature
 
 ## User Interaction
