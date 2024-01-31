@@ -5,18 +5,18 @@
     const charactersData = {}; // Store character details to prevent redundant requests
 
     // Create and setup the loading spinner element for character list
-    const loadingSpinnerCharacterList = document.createElement('div');
-    loadingSpinnerCharacterList.classList.add('spinner', 'glass-container');
-    loadingSpinnerCharacterList.id = 'loading-spinner-character-list';
-    document.body.appendChild(loadingSpinnerCharacterList);
-    loadingSpinnerCharacterList.style.display = 'block'; // Initially set to visible
+    const spinner = document.createElement('div');
+    spinner.classList.add('spinner', 'glass-container');
+    spinner.id = 'spinner';
+    document.body.appendChild(spinner);
+    spinner.style.display = 'block'; // Initially set to visible
 
     // Create and setup the loading spinner element for character details
-    const loadingSpinnerCharacterDetails = document.createElement('div');
-    loadingSpinnerCharacterDetails.classList.add('spinner', 'glass-container');
-    loadingSpinnerCharacterDetails.id = 'loading-spinner-character-details';
-    document.body.appendChild(loadingSpinnerCharacterDetails);
-    loadingSpinnerCharacterDetails.style.display = 'none'; // Initially set to hidden
+    const spinner2 = document.createElement('div');
+    spinner2.classList.add('spinner', 'glass-container');
+    spinner2.id = 'spinner2';
+    document.body.appendChild(spinner2);
+    spinner2.style.display = 'none'; // Initially set to hidden
 
     // Add GSAP TweenMax for animation (Make sure to include the GSAP library in your HTML)
     const { TweenMax, Power2 } = window;
@@ -39,7 +39,7 @@
         if (!charactersData[character.url] || !character.detailsFetched) {
             charactersData[character.url] = true; // Mark character as fetched to prevent redundant requests
             character.detailsFetched = true; // Mark character as details fetched
-            loadingSpinnerCharacterDetails.style.display = 'block'; // Show the loading spinner
+            spinner2.style.display = 'block'; // Show the loading spinner
             characterDetails.innerHTML = '';
 
             Promise.all(character.films.map(url => fetch(url).then(response => response.json())))
@@ -86,7 +86,7 @@
                         });
                     });
 
-                    loadingSpinnerCharacterDetails.style.display = 'none'; // Hide the loading spinner
+                    spinner2.style.display = 'none'; // Hide the loading spinner
 
                     // Scroll to the character details section with smooth scrolling
                     characterDetails.scrollIntoView({ behavior: 'smooth' });
@@ -94,7 +94,7 @@
                 .catch(error => {
                     console.error("Error fetching character details:", error);
                     characterDetails.innerHTML = "<p>Error fetching character details. Please try again.</p>";
-                    loadingSpinnerCharacterDetails.style.display = 'none'; // Hide the loading spinner on error
+                    spinner2.style.display = 'none'; // Hide the loading spinner on error
                 });
         }
     };
@@ -133,7 +133,7 @@
             });
 
             // Hide the loading spinner for character list once characters are loaded
-            loadingSpinnerCharacterList.style.display = 'none';
+            spinner.style.display = 'none';
 
             // Shuffle the animations of character list items
             shuffleAnimations();
@@ -141,6 +141,8 @@
         .catch(error => {
             console.error("Error fetching character list:", error);
             characterDetails.innerHTML = "<p>Error fetching character list. Please try again.</p>";
-            loadingSpinnerCharacterList.style.display = 'none'; // Hide the loading spinner on error
+            spinner.style.display = 'none'; // Hide the loading spinner on error
         });
 })();
+
+
